@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
+import Email from "next-auth/providers/email";
 
 const handler=NextAuth({
     providers:[
@@ -19,7 +20,7 @@ const handler=NextAuth({
                 const user={
                     name:"harkirat",
                     id:"1",
-                    username:"harkirat@gmail.com"
+                    email:"harkirat@gmail.com"
                 }
                 if(user){
                     return user
@@ -37,7 +38,8 @@ const handler=NextAuth({
             clientId: process.env.GITHUB_ID,
             clientSecret: process.env.GITHUB_SECRET
           })
-    ]
+    ],
+    secret:process.env.NEXTAUTH_SECRET
 })
 
 export {handler as GET,handler as POST}

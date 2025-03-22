@@ -1,20 +1,14 @@
-"use client"
-import Image from "next/image";
-import { SessionProvider, signIn, signOut, useSession } from "next-auth/react"; 
+import { getServerSession } from "next-auth";
 
-export default function Home() {
-  return <SessionProvider>
-    <RealHome/>
-  </SessionProvider>
+export default async function Home() {
+  const Session=await getServerSession();
+  const userProfile=db.avatars.findOne({
+    where:{
+      email:session.email
+    }
+  })
+  return<div>
+    {JSON.stringify(userProfile.avatar)}
+  </div>
 }
 
-function RealHome()
-{
-  const session=useSession();
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      {session.status==="authenticated" && <button onClick={()=>signOut()}>LogOut</button>}
-      {session.status==="unauthenticated" && <button onClick={()=>signIn()}>signIn</button>}
-    </div>
-  );
-}
